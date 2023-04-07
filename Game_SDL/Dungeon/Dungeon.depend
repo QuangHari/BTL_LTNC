@@ -1,0 +1,47 @@
+# depslib dependency file v1.0
+1680866391 source:c:\users\admin\onedrive - vnu.edu.vn\documents\github\btl_ltnc\game_sdl\dungeon\main.cpp
+	"CommonFunc.h"
+	"Object.h"
+	"Map.h"
+	"Player.h"
+	"ImpTimer.h"
+
+1680788879 source:c:\users\admin\onedrive - vnu.edu.vn\documents\github\btl_ltnc\game_sdl\dungeon\src\commonfunc.cpp
+	"CommonFunc.h"
+	<iostream>
+
+1680861080 c:\users\admin\onedrive - vnu.edu.vn\documents\github\btl_ltnc\game_sdl\dungeon\include\commonfunc.h
+	<stdio.h>
+	<cstdio>
+	<iostream>
+	<Windows.h>
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_ttf.h>
+
+1680868619 source:c:\users\admin\onedrive - vnu.edu.vn\documents\github\btl_ltnc\game_sdl\dungeon\src\object.cpp
+	"Object.h"
+
+1680852279 c:\users\admin\onedrive - vnu.edu.vn\documents\github\btl_ltnc\game_sdl\dungeon\include\object.h
+	"CommonFunc.h"
+
+1680869204 source:c:\users\admin\onedrive - vnu.edu.vn\documents\github\btl_ltnc\game_sdl\dungeon\src\map.cpp
+	"Map.h"
+
+1680869204 c:\users\admin\onedrive - vnu.edu.vn\documents\github\btl_ltnc\game_sdl\dungeon\include\map.h
+	"CommonFunc.h"
+	"Object.h"
+
+1680868385 source:c:\users\admin\onedrive - vnu.edu.vn\documents\github\btl_ltnc\game_sdl\dungeon\src\player.cpp
+	"Player.h"
+
+1680869204 c:\users\admin\onedrive - vnu.edu.vn\documents\github\btl_ltnc\game_sdl\dungeon\include\player.h
+	"CommonFunc.h"
+	"Object.h"
+
+1680860401 source:c:\users\admin\onedrive - vnu.edu.vn\documents\github\btl_ltnc\game_sdl\dungeon\src\imptimer.cpp
+	"ImpTimer.h"
+
+1680860293 c:\users\admin\onedrive - vnu.edu.vn\documents\github\btl_ltnc\game_sdl\dungeon\include\imptimer.h
+	"CommonFunc.h"
+
