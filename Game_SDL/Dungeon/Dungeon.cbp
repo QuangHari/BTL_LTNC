@@ -34,13 +34,21 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="include/Bullet.h" />
 		<Unit filename="include/CommonFunc.h" />
+		<Unit filename="include/Enemy.h" />
+		<Unit filename="include/ImpTimer.h" />
 		<Unit filename="include/Map.h" />
 		<Unit filename="include/Object.h" />
+		<Unit filename="include/Player.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="src/Bullet.cpp" />
 		<Unit filename="src/CommonFunc.cpp" />
+		<Unit filename="src/Enemy.cpp" />
+		<Unit filename="src/ImpTimer.cpp" />
 		<Unit filename="src/Map.cpp" />
 		<Unit filename="src/Object.cpp" />
+		<Unit filename="src/Player.cpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>

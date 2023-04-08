@@ -3,6 +3,8 @@
 #include "Map.h"
 #include "Player.h"
 #include "ImpTimer.h"
+#include "Enemy.h"
+
 using namespace std;
 
 Object g_background;
@@ -51,6 +53,22 @@ void close (){
     SDL_Quit();
 
 }
+vector<Enemy*> makeEnemyList(){
+    vector<Enemy*> list_enemies;
+    Enemy* enemy = new Enemy[20];
+    for (int i=0;i<20;i++){
+        Enemy* p_enemy =(enemy+i);
+        if (p_enemy != NULL){
+            p_enemy->loadImg("img//zombie_dynamic_left.png",g_screen);
+            p_enemy->setClip();
+            p_enemy->setXPos(700+i*1000);
+            p_enemy->setYPos(250);
+
+            list_enemies.push_back(p_enemy);
+        }
+    }
+    return list_enemies;
+}
 int main(int argc, char* argv[])
 {
     ImpTimer fps_timer;
@@ -66,13 +84,15 @@ int main(int argc, char* argv[])
     game_map1.loadMap("map/map01.dat");
     game_map1.loadTiles(g_screen);
 
-    Player p_player;
-    p_player.loadImg("img//player_right.png",g_screen);
-    p_player.setClip();
 
+    Player p_player;
+    p_player.loadImg("img//soldier_right.png",g_screen);
+    p_player.setClip();
+    vector<Enemy*> list_enemies = makeEnemyList();
 
     bool quit =false ;
     while (!quit){
+
         fps_timer.start();
         while (SDL_PollEvent(&g_event) != 0){
             if (g_event.type == SDL_QUIT){
@@ -86,28 +106,37 @@ int main(int argc, char* argv[])
         SDL_RenderClear(g_screen);
 
         g_background.render(g_screen,NULL);
-        game_map1.drawMap(g_screen);
         Map map_data = game_map1.getMap();
 
+        p_player.handleBullet(g_screen);
         p_player.setMapXY(map_data.start_x,map_data.start_y);
         p_player.Doplayer(map_data);
         p_player.Show(g_screen);
 
         game_map1.setMap(map_data);
-        //game_map1.drawMap(g_screen,p_player.getXPos() );
         game_map1.drawMap(g_screen );
+        for (int i=0;i<list_enemies.size();i++){
+            Enemy* p_enemy = list_enemies.at(i);
+            if (p_enemy != NULL){
+                p_enemy->setMapXY(map_data.start_x,map_data.start_y);
+                p_enemy->doEnemy(map_data);
+                p_enemy->show(g_screen);
+            }
+
+        }
 
         SDL_RenderPresent(g_screen);
         int real_time =fps_timer.getTick();
         int time_one_frame = 1000/FRAME_PER_SECOND;
         int real_fps =1000/real_time;
-        cout << real_fps<<endl;
+        //cout << real_fps<<endl;
         if (real_time <time_one_frame){
             int delay = time_one_frame - real_time;
             if (delay >0){
                 SDL_Delay(delay);
             }
         }
+
     }
     close();
     return 0;

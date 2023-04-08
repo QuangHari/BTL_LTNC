@@ -4,6 +4,8 @@
 #define MAX_FALL_SPEED 8
 #define PLAYER_SPEED 15
 #define PLAYER_JUMP_VAL 20
+#define HEIGHT_BULLET 0.45
+#define HETGHT_BULLET_RUN 0.5
 
 Player::Player()
 {
@@ -92,14 +94,35 @@ void Player::handleInputAction(SDL_Event event,SDL_Renderer* screen){
                     updateImage(screen);
                 }
                 break;
-            case SDLK_w:
+            case SDLK_k:
                 {
-                    if (on_ground ==true){
+                    if (on_ground ==true ){
                         input_type.jump =1;
                     }
                 }
                 break;
+            case SDLK_j:
+                {
+                    Bullet* p_bullet = new Bullet();
 
+                    if(status == WALK_LEFT){
+
+                        p_bullet->loadImg("img//_bullet.png",screen);
+                        p_bullet->setDir(Bullet::DIR_LEFT);
+                        p_bullet->setRect(this->rect.x -3,rect .y +height_frame*HEIGHT_BULLET);
+                    }else if (status = WALK_RIGHT){
+                        p_bullet->loadImg("img//_bullet2.png",screen);
+                        p_bullet->setDir(Bullet::DIR_RIGHT);
+                        p_bullet->setRect(this->rect.x +width_frame-20,rect .y +height_frame*HEIGHT_BULLET);
+                    }
+
+                    p_bullet->setXVal(20);
+                    p_bullet->setYVal(20);
+                    p_bullet->setMove(true);
+                    p_bullet_list.push_back(p_bullet);
+
+                }
+                break;
             default :
                 break;
         }
@@ -120,10 +143,12 @@ void Player::handleInputAction(SDL_Event event,SDL_Renderer* screen){
     }
 }
 
+
 void Player::Doplayer(Map& map_data){
     if (come_back_time ==0){
         x_val = 0 ;
         y_val += 0.8;
+
         if (y_val >= MAX_FALL_SPEED){
             y_val = MAX_FALL_SPEED;
         }
@@ -133,16 +158,22 @@ void Player::Doplayer(Map& map_data){
         if (input_type.right == 1){
             x_val += PLAYER_SPEED;
         }
+        checkMap(map_data);
         if (input_type.jump ==1 ){
             if (on_ground == true){
-                y_val -=PLAYER_JUMP_VAL;
-                input_type.jump =0;
-                on_ground =false;
+                if (y_val >0){
+
+                }else {
+                    y_val -=PLAYER_JUMP_VAL;
+                    input_type.jump =0;
+                    on_ground =false;
+                }
+
             }
         }
-
-        checkMap(map_data);
         centerPlayerOnMap(map_data);
+
+
     }else if (come_back_time >0){
         come_back_time --;
         if (come_back_time ==0){
@@ -165,7 +196,6 @@ void Player::checkMap(Map& map_data){
     int x2 = 0;
     int y1 = 0;
     int y2 = 0;
-
 
     int height_min = height_frame <TILE_SIZE ? height_frame : TILE_SIZE;
     x1 = (x_pos + x_val)/TILE_SIZE;
@@ -207,7 +237,7 @@ void Player::checkMap(Map& map_data){
                 if (status ==WALK_NONE){
                     status =WALK_RIGHT;
                 }
-                on_ground = true;
+                on_ground =true;
             }
         }else if (y_val < 0 ){
             if (map_data.tile[y1][x1] != BLANK_TILE || map_data.tile[y1][x2]!= BLANK_TILE){
@@ -215,8 +245,8 @@ void Player::checkMap(Map& map_data){
                 y_val = 0;
             }
         }
-
     }
+
 
     x_pos +=x_val;
     y_pos += y_val;
@@ -252,18 +282,38 @@ void Player::centerPlayerOnMap(Map& map_data){
 void Player::updateImage(SDL_Renderer* des){
     if (on_ground == true){
         if (status == WALK_LEFT){
-            loadImg("img//player_left.png",des);
+            loadImg("img//soldier_left.png",des);
         }else {
-            loadImg("img//player_right.png",des);
+            loadImg("img//soldier_right.png",des);
         }
 
     }else {
         if (status == WALK_LEFT){
-            loadImg("img//jum_left.png",des);
+            loadImg("img//soldier_left.png",des);
         }else {
-            loadImg("img//jum_right.png",des);
+            loadImg("img//soldier_right.png",des);
         }
     }
 }
 
+void Player::handleBullet(SDL_Renderer* des){
+    for (int i=0;i<p_bullet_list.size();i++){
+        Bullet* bullet =p_bullet_list.at(i);
+        if (bullet != NULL){
+            if(bullet->getMove() ==true){
+                bullet->handleMove(SCREEN_WIDTH,SCREEN_HEIGHT);
+                bullet->render(des);
+            }else {
+                p_bullet_list.erase(p_bullet_list.begin() +i);
+                if (bullet !=NULL){
+                    delete bullet;
+                    bullet =NULL;
+                }
+            }
+        }
+
+
+    }
+
+}
 

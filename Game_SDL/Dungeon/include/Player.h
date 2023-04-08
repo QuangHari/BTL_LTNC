@@ -1,9 +1,11 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include <vector>
+
 #include "CommonFunc.h"
 #include "Object.h"
-
+#include "Bullet.h"
 
 
 class Player :public Object
@@ -32,7 +34,10 @@ class Player :public Object
         void updateImage(SDL_Renderer* des);
 
         float getXPos(){return x_pos;}
+        void setBullet(std::vector<Bullet*> list){p_bullet_list = list;}
+        void handleBullet(SDL_Renderer* des);
     private:
+        std::vector<Bullet*> p_bullet_list;
         float x_val;
         float y_val;
 
