@@ -129,7 +129,7 @@ int main(int argc, char* argv[])
         int real_time =fps_timer.getTick();
         int time_one_frame = 1000/FRAME_PER_SECOND;
         int real_fps =1000/real_time;
-        //cout << real_fps<<endl;
+        cout << real_fps<<endl;
         if (real_time <time_one_frame){
             int delay = time_one_frame - real_time;
             if (delay >0){
