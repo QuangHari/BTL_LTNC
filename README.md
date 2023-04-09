@@ -5,7 +5,8 @@
     Nhiệm vụ của bạn là sinh tồn, tiêu diệt xác sống nhiều nhất có thể và thoát khỏi thành phố trước khi nó phát nổ.
 
 # Cách chơi 
-	Sử dụng các nút W,A,S,D để di chuyển cũng như điều hướng đạn bắn ; nút J để bắn đạn , nút K để nhảy lên 
+	Sử dụng các nút W,A,S,D để di chuyển cũng như điều hướng đạn bắn 
+	Nút J để bắn đạn , nút K để nhảy lên 
 # Yêu cầu
 	Cần cài đặt các thư viện : 
 • SDL2
