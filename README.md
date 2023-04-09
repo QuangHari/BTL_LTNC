@@ -9,12 +9,16 @@
 # Yêu cầu
 	Cần cài đặt các thư viện : 
 • SDL2
+
 • SDL2_image
+
 • SDL2_ttf
+
 • SDL2_mixer
 # Nguồn tham khảo
 Youtube : https://www.youtube.com/@PhatTrienPhanMem123AZ
 # Ảnh Demo Gameplay
+![image](https://user-images.githubusercontent.com/113539125/230767441-9a349650-179c-4d2e-b623-d661514dd851.png)
 
 	
 	
