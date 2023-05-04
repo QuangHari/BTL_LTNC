@@ -1,17 +1,20 @@
 # depslib dependency file v1.0
-1681033541 source:c:\users\admin\onedrive - vnu.edu.vn\documents\github\btl_ltnc\game_sdl\dungeon\main.cpp
+1683206225 source:c:\users\admin\onedrive - vnu.edu.vn\documents\github\btl_ltnc\game_sdl\dungeon\main.cpp
 	"CommonFunc.h"
 	"Object.h"
 	"Map.h"
 	"Player.h"
 	"ImpTimer.h"
 	"Enemy.h"
+	"Explosion.h"
+	"TextObj.h"
+	"PlayerInfo.h"
 
-1680788879 source:c:\users\admin\onedrive - vnu.edu.vn\documents\github\btl_ltnc\game_sdl\dungeon\src\commonfunc.cpp
+1683202060 source:c:\users\admin\onedrive - vnu.edu.vn\documents\github\btl_ltnc\game_sdl\dungeon\src\commonfunc.cpp
 	"CommonFunc.h"
 	<iostream>
 
-1680972912 c:\users\admin\onedrive - vnu.edu.vn\documents\github\btl_ltnc\game_sdl\dungeon\include\commonfunc.h
+1683206225 c:\users\admin\onedrive - vnu.edu.vn\documents\github\btl_ltnc\game_sdl\dungeon\include\commonfunc.h
 	<stdio.h>
 	<cstdio>
 	<iostream>
@@ -19,7 +22,9 @@
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_ttf.h>
+	<SDL_mixer.h>
 	<vector>
+	"TextObj.h"
 
 1680868619 source:c:\users\admin\onedrive - vnu.edu.vn\documents\github\btl_ltnc\game_sdl\dungeon\src\object.cpp
 	"Object.h"
@@ -34,10 +39,10 @@
 	"CommonFunc.h"
 	"Object.h"
 
-1680975671 source:c:\users\admin\onedrive - vnu.edu.vn\documents\github\btl_ltnc\game_sdl\dungeon\src\player.cpp
+1683202887 source:c:\users\admin\onedrive - vnu.edu.vn\documents\github\btl_ltnc\game_sdl\dungeon\src\player.cpp
 	"Player.h"
 
-1680955845 c:\users\admin\onedrive - vnu.edu.vn\documents\github\btl_ltnc\game_sdl\dungeon\include\player.h
+1683205613 c:\users\admin\onedrive - vnu.edu.vn\documents\github\btl_ltnc\game_sdl\dungeon\include\player.h
 	<vector>
 	"CommonFunc.h"
 	"Object.h"
@@ -49,17 +54,39 @@
 1680860293 c:\users\admin\onedrive - vnu.edu.vn\documents\github\btl_ltnc\game_sdl\dungeon\include\imptimer.h
 	"CommonFunc.h"
 
-1680965490 source:c:\users\admin\onedrive - vnu.edu.vn\documents\github\btl_ltnc\game_sdl\dungeon\src\bullet.cpp
+1683197851 source:c:\users\admin\onedrive - vnu.edu.vn\documents\github\btl_ltnc\game_sdl\dungeon\src\bullet.cpp
 	"Bullet.h"
 
 1680965490 c:\users\admin\onedrive - vnu.edu.vn\documents\github\btl_ltnc\game_sdl\dungeon\include\bullet.h
 	"CommonFunc.h"
 	"Object.h"
 
-1680976008 source:c:\users\admin\onedrive - vnu.edu.vn\documents\github\btl_ltnc\game_sdl\dungeon\src\enemy.cpp
+1681817690 source:c:\users\admin\onedrive - vnu.edu.vn\documents\github\btl_ltnc\game_sdl\dungeon\src\enemy.cpp
 	"Enemy.h"
 
-1680972126 c:\users\admin\onedrive - vnu.edu.vn\documents\github\btl_ltnc\game_sdl\dungeon\include\enemy.h
+1681815604 c:\users\admin\onedrive - vnu.edu.vn\documents\github\btl_ltnc\game_sdl\dungeon\include\enemy.h
+	"CommonFunc.h"
+	"Object.h"
+
+1681839464 source:c:\users\admin\onedrive - vnu.edu.vn\documents\github\btl_ltnc\game_sdl\dungeon\src\explosion.cpp
+	"Explosion.h"
+
+1681839345 c:\users\admin\onedrive - vnu.edu.vn\documents\github\btl_ltnc\game_sdl\dungeon\include\explosion.h
+	"CommonFunc.h"
+	"Object.h"
+	<iostream>
+
+1683199742 source:c:\users\admin\onedrive - vnu.edu.vn\documents\github\btl_ltnc\game_sdl\dungeon\src\textobj.cpp
+	"TextObj.h"
+
+1683199742 c:\users\admin\onedrive - vnu.edu.vn\documents\github\btl_ltnc\game_sdl\dungeon\include\textobj.h
+	"CommonFunc.h"
+	"Object.h"
+
+1683112971 source:c:\users\admin\onedrive - vnu.edu.vn\documents\github\btl_ltnc\game_sdl\dungeon\src\playerinfo.cpp
+	"PlayerInfo.h"
+
+1683204852 c:\users\admin\onedrive - vnu.edu.vn\documents\github\btl_ltnc\game_sdl\dungeon\include\playerinfo.h
 	"CommonFunc.h"
 	"Object.h"
 

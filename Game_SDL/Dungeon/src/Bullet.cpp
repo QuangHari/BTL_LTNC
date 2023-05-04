@@ -63,7 +63,7 @@ void Bullet::handleMove(const int& x_border,const int& y_border){
         if (rect.x >x_border){
             is_move = false;
         }
-        rect.y -= y_val;
+        rect.y += y_val;
         if (rect.y <0){
             is_move = false;
         }
@@ -73,7 +73,7 @@ void Bullet::handleMove(const int& x_border,const int& y_border){
         if (rect.x <0){
             is_move = false;
         }
-        rect.y -= y_val;
+        rect.y += y_val;
         if (rect.y <0){
             is_move = false;
         }

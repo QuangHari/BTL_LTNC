@@ -1,6 +1,6 @@
 #include "Player.h"
 
-#define GRAVITY 0.8
+#define GRAVITY 1
 #define MAX_FALL_SPEED 8
 #define PLAYER_SPEED 15
 #define PLAYER_JUMP_VAL 20
@@ -17,6 +17,9 @@ Player::Player()
     width_frame = 0;
     height_frame = 0;
     status = WALK_NONE;
+    hp =3;
+    muteMusic = false;
+    muteEffect = false;
 
     input_type.down=0;
     input_type.left=0;
@@ -26,6 +29,8 @@ Player::Player()
     on_ground =false;
     map_x = 0;
     map_y = 0;
+    number_bullet = 10;
+    number_bullet_left = 40;
 
 }
 
@@ -75,9 +80,23 @@ void Player::Show(SDL_Renderer* des){
 
 }
 
-void Player::handleInputAction(SDL_Event event,SDL_Renderer* screen){
+void Player::handleInputAction(SDL_Event event,SDL_Renderer* screen,Mix_Chunk* chunk,Mix_Chunk* chunk2,Mix_Chunk* chunk3,Mix_Chunk* chunk4){
+    fall = chunk4;
     if (event.type == SDL_KEYDOWN){
         switch (event.key.keysym.sym){
+            case SDLK_w:
+                {
+                    input_type.up =1;
+                    input_type.down =0;
+                }
+                break;
+            case SDLK_s:
+                {
+                    input_type.down =1;
+                    input_type.up =0;
+                }
+                break;
+
             case SDLK_d:
                 {
                     status = WALK_RIGHT;
@@ -103,26 +122,82 @@ void Player::handleInputAction(SDL_Event event,SDL_Renderer* screen){
                 break;
             case SDLK_j:
                 {
-                    Bullet* p_bullet = new Bullet();
+                    if(number_bullet>0){
 
-                    if(status == WALK_LEFT){
+                        number_bullet --;
+                        Bullet* p_bullet = new Bullet();
 
-                        p_bullet->loadImg("img//_bullet.png",screen);
-                        p_bullet->setDir(Bullet::DIR_LEFT);
-                        p_bullet->setRect(this->rect.x -3,rect .y +height_frame*HEIGHT_BULLET);
-                    }else if (status = WALK_RIGHT){
-                        p_bullet->loadImg("img//_bullet2.png",screen);
-                        p_bullet->setDir(Bullet::DIR_RIGHT);
-                        p_bullet->setRect(this->rect.x +width_frame-20,rect .y +height_frame*HEIGHT_BULLET);
+                        if(status == WALK_LEFT){
+                            if (input_type.down == 0 && input_type.up == 0){
+                                p_bullet->loadImg("img//_bullet.png",screen);
+                                p_bullet->setDir(Bullet::DIR_LEFT);
+                                p_bullet->setRect(this->rect.x -3,rect .y +height_frame*HEIGHT_BULLET);
+                            }else if (input_type.down == 1){
+                                p_bullet->loadImg("img//_bullet7.png",screen);
+                                p_bullet->setDir(Bullet::DIR_DOWN_LEFT);
+                                p_bullet->setRect(this->rect.x -3,rect .y +height_frame*HEIGHT_BULLET);
+                            }else if (input_type.up == 1){
+                                p_bullet->loadImg("img//_bullet6.png",screen);
+                                p_bullet->setDir(Bullet::DIR_UP_LEFT);
+                                p_bullet->setRect(this->rect.x -3,rect .y +height_frame*HEIGHT_BULLET);
+                            }
+                        }else if (status = WALK_RIGHT){
+                            if (input_type.down == 0 && input_type.up == 0){
+                                p_bullet->loadImg("img//_bullet2.png",screen);
+                                p_bullet->setDir(Bullet::DIR_RIGHT);
+                                p_bullet->setRect(this->rect.x +width_frame-20,rect .y +height_frame*HEIGHT_BULLET);
+                            }else if (input_type.down == 1){
+                                p_bullet->loadImg("img//_bullet5.png",screen);
+                                p_bullet->setDir(Bullet::DIR_DOWN_RIGHT);
+                                p_bullet->setRect(this->rect.x +width_frame-20,rect .y +height_frame*HEIGHT_BULLET);
+                            }else if (input_type.up == 1){
+                                p_bullet->loadImg("img//_bullet4.png",screen);
+                                p_bullet->setDir(Bullet::DIR_UP_RIGHT);
+                                p_bullet->setRect(this->rect.x +width_frame-20,rect .y +height_frame*HEIGHT_BULLET);
+                            }
+
+                        }
+
+                        p_bullet->setXVal(20);
+                        p_bullet->setYVal(20);
+                        p_bullet->setMove(true);
+                        p_bullet_list.push_back(p_bullet);
+                        if (!muteEffect){
+                            Mix_PlayChannel(-1,chunk,0);
+                        }
+                    }else{
+                        if (!muteEffect){
+                            Mix_PlayChannel(-1,chunk2,0);
+                        }
                     }
-
-                    p_bullet->setXVal(20);
-                    p_bullet->setYVal(20);
-                    p_bullet->setMove(true);
-                    p_bullet_list.push_back(p_bullet);
 
                 }
                 break;
+
+            case SDLK_m:
+                {
+                    if (!muteMusic){
+                        muteMusic = true;
+                    }else {
+                        muteMusic = false;
+                    }
+                }
+                break;
+            case SDLK_n:
+                {
+                    if (!muteEffect){
+                        muteEffect = true;
+                    }else {
+                        muteEffect = false;
+                    }
+                }
+                break;
+            case SDLK_l:
+                {
+                    reload(chunk3);
+                }
+                break;
+
             default :
                 break;
         }
@@ -138,11 +213,41 @@ void Player::handleInputAction(SDL_Event event,SDL_Renderer* screen){
                     input_type.left =0 ;
                 }
                 break;
+            case SDLK_w:
+                {
+                    input_type.up =0 ;
+                }
+                break;
+            case SDLK_s:
+                {
+                    input_type.down =0 ;
+                }
+                break;
+            case SDLK_j:
+                {
+
+                }
+                break;
 
         }
     }
 }
+void Player::reload(Mix_Chunk* sound){
+    if (number_bullet <10 && number_bullet_left >0){
+        if (10-number_bullet>=number_bullet_left){
+            number_bullet+=number_bullet_left;
+            number_bullet_left = 0;
+        }else {
+            number_bullet_left = number_bullet_left - (10-number_bullet);
+            number_bullet = 10;
 
+        }
+        if (!muteEffect){
+            Mix_PlayChannel(-1,sound,0);
+        }
+
+    }
+}
 
 void Player::Doplayer(Map& map_data){
     if (come_back_time ==0){
@@ -257,6 +362,8 @@ void Player::checkMap(Map& map_data){
     }
     if (y_pos >map_data.max_y){
         come_back_time = 60;
+        Mix_PlayChannel(-1,fall,0);
+        hp -- ;
 
 
     }
@@ -311,9 +418,29 @@ void Player::handleBullet(SDL_Renderer* des){
                 }
             }
         }
-
-
     }
-
 }
+
+SDL_Rect Player::getRectFrame(){
+    SDL_Rect rectPlayer;
+    rectPlayer.x = rect.x +30;
+    rectPlayer.y = rect.y;
+    rectPlayer.w = width_frame -30;
+    rectPlayer.h = height_frame -1;
+    return rectPlayer;
+}
+
+void Player::removeBullet(const int& idx){
+    int size =p_bullet_list.size();
+    if (size >0 && idx <size){
+        Bullet* p_bullet =p_bullet_list.at(idx);
+        p_bullet_list.erase(p_bullet_list.begin() + idx);
+        if (p_bullet){
+            delete p_bullet;
+            p_bullet = NULL;
+
+        }
+    }
+}
+
 
