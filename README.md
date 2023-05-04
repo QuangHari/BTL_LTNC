@@ -21,6 +21,9 @@ Youtube : https://www.youtube.com/@PhatTrienPhanMem123AZ
 # Ảnh Demo Gameplay
 ![image](https://user-images.githubusercontent.com/113539125/230767441-9a349650-179c-4d2e-b623-d661514dd851.png)
 
+# Video Demo
+https://drive.google.com/file/d/1qLGZCliiR4hjGzLX1Mm9wL4b8JCYf_xD/view?usp=share_link
+
 	
 	
   
