@@ -7,6 +7,7 @@
 #include "Explosion.h"
 #include "TextObj.h"
 #include "PlayerInfo.h"
+#include "Boss.h"
 using namespace std;
 
 Object g_background;
@@ -165,6 +166,13 @@ again_label:
     p_player.loadImg("img//soldier_right.png",g_screen);
     p_player.setClip();
 
+    Boss boss;
+    boss.loadImg("img//bosstest.png",g_screen);
+    boss.setClip();
+    boss.setXPos(MAX_MAP_X*TILE_SIZE - SCREEN_WIDTH*0.5);
+    boss.setYPos(10);
+
+
     PlayerInfo player_info;
     player_info.init(g_screen);
 
@@ -214,6 +222,10 @@ again_label:
 
         }
         if (p_player.getHp()<player_info.getPosListSize()){
+                if (p_player.getHp() <=0){
+                    isdead = true;
+
+                }
                player_info.decrease();
             }
         if (p_player.getMusic() == true){
@@ -382,8 +394,16 @@ again_label:
         score_text.loadFromRenderText(font,g_screen);
         score_text.renderText(g_screen,SCREEN_WIDTH*0.4-50,15);
 
+        int val = MAX_MAP_X*TILE_SIZE -(map_data.start_x+p_player.getRect().x);
+        if (val<= SCREEN_WIDTH){
+            boss.setMapXY(map_data.start_x,map_data.start_y);
+            boss.doEnemy(map_data);
+            boss.show(g_screen);
+
+        }
 
         SDL_RenderPresent(g_screen);
+
 
         if (isdead == true){
 

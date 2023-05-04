@@ -44,7 +44,7 @@ class Enemy:public Object
 
 
 
-    private:
+    protected:
 
         int map_x;
         int map_y;
