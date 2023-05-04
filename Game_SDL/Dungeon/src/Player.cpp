@@ -173,7 +173,7 @@ void Player::handleInputAction(SDL_Event event,SDL_Renderer* screen,Mix_Chunk* c
 
                 }
                 break;
-
+    //
             case SDLK_m:
                 {
                     if (!muteMusic){
