@@ -36,7 +36,7 @@ Chat GPT
 ![image](https://user-images.githubusercontent.com/113539125/230767441-9a349650-179c-4d2e-b623-d661514dd851.png)
 
 # Video Demo
-(Để vid có chất lượng ổn đinh nhất cả vể âm thanh, hình ảnh có thể tải về để tốt hơn)
+(Để vid có âm thanh cần tải về)
 https://drive.google.com/file/d/1qLGZCliiR4hjGzLX1Mm9wL4b8JCYf_xD/view?usp=share_link
 
 	
