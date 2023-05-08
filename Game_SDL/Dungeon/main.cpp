@@ -169,8 +169,11 @@ again_label:
     Boss boss;
     boss.loadImg("img//bosstest.png",g_screen);
     boss.setClip();
-    boss.setXPos(MAX_MAP_X*TILE_SIZE - SCREEN_WIDTH*0.5);
-    boss.setYPos(10);
+
+
+    boss.setYPos(-200);
+    boss.setXPos(600);
+    //boss.setXPos(MAX_MAP_X*TILE_SIZE-SCREEN_WIDTH*0.6);
 
 
     PlayerInfo player_info;
@@ -207,7 +210,7 @@ again_label:
     score_text.setColor(TextObj::WHITE);
     UINT score_val = 0;
     bool isdead = false;
-
+    bool isBossAppear =false;
 
     while (!quit){
 
@@ -259,6 +262,7 @@ again_label:
         int frame_dead_height=explosion.getFrameHeight();
         for (int i=0;i<list_enemies.size();i++){
             Enemy* p_enemy = list_enemies.at(i);
+
             if (p_enemy != NULL){
 
                 p_enemy->setMapXY(map_data.start_x,map_data.start_y);
@@ -287,19 +291,14 @@ again_label:
                         p_player.setComeBack(60);
                         continue;
                     }
-                    //if (p_player.getHp()<=0){
-                        //isdead = true;
-                        //if (MessageBox(NULL, "GAME OVER!","Info", MB_OK | MB_ICONSTOP) == IDOK){
-                            //p_enemy->free();
-                            //close();
-                            //SDL_Quit();
-                            //return 0;
-                        //}
-                    //}
+
                 }
 
             }
         }
+
+
+
         if (p_player.getHp()<=0){
             isdead = true;
         }
@@ -313,10 +312,34 @@ again_label:
             frameDead = 0;
         }
 
+
+        int val = MAX_MAP_X*TILE_SIZE -(map_data.start_x+p_player.getRect().x);
+        //if (val<= SCREEN_WIDTH){
+            //if (isBossAppear == false){
+                boss.setMapXY(map_data.start_x,map_data.start_y);
+                boss.doEnemy(map_data);
+                boss.show(g_screen);
+                isBossAppear = true;
+            //}
+
+        //}
+        if (isBossAppear ==true){
+
+            boss.attack(g_screen);
+            boss.makeBulelt(g_screen,SCREEN_WIDTH,SCREEN_HEIGHT);
+            boss.turnAround(p_player.getRect().x,g_screen);
+        }
+        /*boss.setMapXY(map_data.start_x,map_data.start_y);
+        boss.doEnemy(map_data);
+        boss.show(g_screen);*/
+
+
         vector<Bullet*> bullet_list = p_player.getBullets();
         for (int i=0;i<bullet_list.size();i++){
             Bullet* p_bullet =bullet_list.at(i);
             if (p_bullet != NULL){
+                p_bullet->setBulletType(Bullet::BULLETGUN);
+                SDL_Rect bRect = p_bullet->getRect();
                 for (int j=0;j < list_enemies.size();j++){
                     Enemy* enemy = list_enemies.at(j);
                     if (enemy != NULL){
@@ -326,7 +349,7 @@ again_label:
                         eRect.w = enemy->getWidthFrame();
                         eRect.h = enemy->getHeightFrame();
 
-                        SDL_Rect bRect = p_bullet->getRect();
+
 
                         bool bCol =SDLCommonFunc::CheckCollision1(bRect,eRect);
                         if (bCol){
@@ -347,6 +370,24 @@ again_label:
                     }
                 }
 
+                SDL_Rect bossRect;
+                bossRect.x = boss.getRect().x +60;
+                bossRect.y = boss.getRect().y;
+                bossRect.w = boss.getWidthFrame()-90;
+                bossRect.h = boss.getHeightFrame();
+                bool bCol =SDLCommonFunc::CheckCollision1(bRect,bossRect);
+                if (bCol){
+                    int deadmenu = SDLCommonFunc::showDeadMenu(g_screen,font);
+                    if (deadmenu == 1){
+                        quit = true;
+                        continue;
+                    }else if (deadmenu ==2){
+                        quit = false;
+                        goto again_label;
+                    }
+                }
+
+
             }
         }
         if (frame >0 && frame <12){
@@ -363,11 +404,7 @@ again_label:
         Uint32 time_val = SDL_GetTicks() / 1000;
         Uint32 val_time = 300 - time_val;
         if (val_time<=0){
-            /*if (MessageBox(NULL, "GAME OVER!","Info", MB_OK | MB_ICONSTOP) == IDOK){
-                quit = true;
-                break;
 
-            }*/
             isdead = true;
         }else {
             std::string str_val =std::to_string(val_time);
@@ -394,13 +431,6 @@ again_label:
         score_text.loadFromRenderText(font,g_screen);
         score_text.renderText(g_screen,SCREEN_WIDTH*0.4-50,15);
 
-        int val = MAX_MAP_X*TILE_SIZE -(map_data.start_x+p_player.getRect().x);
-        if (val<= SCREEN_WIDTH){
-            boss.setMapXY(map_data.start_x,map_data.start_y);
-            boss.doEnemy(map_data);
-            boss.show(g_screen);
-
-        }
 
         SDL_RenderPresent(g_screen);
 

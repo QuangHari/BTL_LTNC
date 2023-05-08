@@ -31,7 +31,7 @@ int SDLCommonFunc::ShowMenu(SDL_Renderer* des, TTF_Font* font){
     SDL_Event event;
     Object background;
 
-    bool ret = background.loadImg("img//menugame.png",des);
+    bool ret = background.loadImg("img//menu.png",des);
     if (ret == false){
         return 1 ;
     }

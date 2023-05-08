@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1683211960 source:c:\users\admin\onedrive - vnu.edu.vn\documents\github\btl_ltnc\game_sdl\dungeon\main.cpp
+1683567159 source:c:\users\admin\onedrive - vnu.edu.vn\documents\github\btl_ltnc\game_sdl\dungeon\main.cpp
 	"CommonFunc.h"
 	"Object.h"
 	"Map.h"
@@ -11,7 +11,7 @@
 	"PlayerInfo.h"
 	"Boss.h"
 
-1683202060 source:c:\users\admin\onedrive - vnu.edu.vn\documents\github\btl_ltnc\game_sdl\dungeon\src\commonfunc.cpp
+1683541841 source:c:\users\admin\onedrive - vnu.edu.vn\documents\github\btl_ltnc\game_sdl\dungeon\src\commonfunc.cpp
 	"CommonFunc.h"
 	<iostream>
 
@@ -40,7 +40,7 @@
 	"CommonFunc.h"
 	"Object.h"
 
-1683213563 source:c:\users\admin\onedrive - vnu.edu.vn\documents\github\btl_ltnc\game_sdl\dungeon\src\player.cpp
+1683216685 source:c:\users\admin\onedrive - vnu.edu.vn\documents\github\btl_ltnc\game_sdl\dungeon\src\player.cpp
 	"Player.h"
 
 1683206503 c:\users\admin\onedrive - vnu.edu.vn\documents\github\btl_ltnc\game_sdl\dungeon\include\player.h
@@ -55,12 +55,13 @@
 1680860293 c:\users\admin\onedrive - vnu.edu.vn\documents\github\btl_ltnc\game_sdl\dungeon\include\imptimer.h
 	"CommonFunc.h"
 
-1683197851 source:c:\users\admin\onedrive - vnu.edu.vn\documents\github\btl_ltnc\game_sdl\dungeon\src\bullet.cpp
+1683565521 source:c:\users\admin\onedrive - vnu.edu.vn\documents\github\btl_ltnc\game_sdl\dungeon\src\bullet.cpp
 	"Bullet.h"
 
-1680965490 c:\users\admin\onedrive - vnu.edu.vn\documents\github\btl_ltnc\game_sdl\dungeon\include\bullet.h
+1683549510 c:\users\admin\onedrive - vnu.edu.vn\documents\github\btl_ltnc\game_sdl\dungeon\include\bullet.h
 	"CommonFunc.h"
 	"Object.h"
+	<cmath>
 
 1681817690 source:c:\users\admin\onedrive - vnu.edu.vn\documents\github\btl_ltnc\game_sdl\dungeon\src\enemy.cpp
 	"Enemy.h"
@@ -91,11 +92,12 @@
 	"CommonFunc.h"
 	"Object.h"
 
-1683212234 c:\users\admin\onedrive - vnu.edu.vn\documents\github\btl_ltnc\game_sdl\dungeon\include\boss.h
+1683567921 c:\users\admin\onedrive - vnu.edu.vn\documents\github\btl_ltnc\game_sdl\dungeon\include\boss.h
 	"CommonFunc.h"
 	"Object.h"
 	"Enemy.h"
+	"Bullet.h"
 
-1683212186 source:c:\users\admin\onedrive - vnu.edu.vn\documents\github\btl_ltnc\game_sdl\dungeon\src\boss.cpp
+1683566968 source:c:\users\admin\onedrive - vnu.edu.vn\documents\github\btl_ltnc\game_sdl\dungeon\src\boss.cpp
 	"Boss.h"
 

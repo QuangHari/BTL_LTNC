@@ -34,6 +34,7 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="include/Boss.h" />
 		<Unit filename="include/Bullet.h" />
 		<Unit filename="include/CommonFunc.h" />
 		<Unit filename="include/Enemy.h" />
@@ -45,6 +46,7 @@
 		<Unit filename="include/PlayerInfo.h" />
 		<Unit filename="include/TextObj.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="src/Boss.cpp" />
 		<Unit filename="src/Bullet.cpp" />
 		<Unit filename="src/CommonFunc.cpp" />
 		<Unit filename="src/Enemy.cpp" />
