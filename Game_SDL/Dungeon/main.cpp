@@ -71,6 +71,10 @@ bool initData(){
         if (reload_sound == NULL){
             check = false;
         }
+        scream_sound = Mix_LoadWAV("sound//scream.wav");
+        if (scream_sound == NULL){
+            check = false;
+        }
 
 
     }
@@ -167,7 +171,7 @@ again_label:
     p_player.setClip();
 
     Boss boss;
-    boss.loadImg("img//bosstest.png",g_screen);
+    boss.loadImg("img//bossleft.png",g_screen);
     boss.setClip();
 
 
@@ -198,6 +202,7 @@ again_label:
 
     int hp =3;
     int timeReset = 100;
+    bool isLoadScream = false;
 
 
     TextObj time_game;
@@ -323,13 +328,22 @@ again_label:
 
         // boss attack
         if (isBossAppear ==true){
+            if (isLoadScream == false){
+                if (!p_player.getMuteEffect()){
+                    Mix_PlayChannel(-1,scream_sound,0);
+                }
+                isLoadScream = true;
+
+            }
+
             boss.setMapXY(map_data.start_x,map_data.start_y);
             boss.doEnemy(map_data);
-            boss.show(g_screen);
+
 
             boss.attack(p_player.getRect().x,g_screen);
             boss.makeBulelt(g_screen,SCREEN_WIDTH,SCREEN_HEIGHT);
             boss.turnAround(p_player.getRect().x,g_screen);
+            boss.show(g_screen);
             SDL_Rect bossRect;
             SDL_Rect playerRect;
             bossRect.x = boss.getXPos();
@@ -355,11 +369,11 @@ again_label:
 
                            // player_info.decrease();
                             //player_info.render(g_screen);
-                            std::cout<<"dead";
+
                             x_dead = p_player.getRect().x - frame_explosion_width*0.5;
                             y_dead = p_player.getRect().y - frame_explosion_height*0.5;
                             frameDead ++;
-                            p_player.setRect(0,0);
+                            p_player.setRect(SCREEN_HEIGHT/2,0);
                             p_player.setComeBack(60);
                             timeReset = 100;
                             continue;
@@ -394,7 +408,7 @@ again_label:
                                 x_dead = p_player.getRect().x - frame_explosion_width*0.5;
                                 y_dead = p_player.getRect().y - frame_explosion_height*0.5;
                                 frameDead ++;
-                                p_player.setRect(0,0);
+                                p_player.setRect(SCREEN_WIDTH/2,0);
                                 p_player.setComeBack(60);
                                 //timeReset = 100;
                                 continue;
@@ -533,7 +547,7 @@ again_label:
         int real_time =fps_timer.getTick();
         int time_one_frame = 1000/FRAME_PER_SECOND;
         int real_fps =1000/real_time;
-        //cout << real_fps<<endl;
+        cout << real_fps<<endl;
         if (real_time <time_one_frame){
             int delay = time_one_frame - real_time;
             if (delay >0){

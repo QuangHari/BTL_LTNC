@@ -294,7 +294,7 @@ void Player::Doplayer(Map& map_data){
                     x_pos =0;
                 }
             }else {
-                x_pos = map_data.start_x +100;
+                x_pos = map_data.start_x +SCREEN_WIDTH/2;
             }
 
         }

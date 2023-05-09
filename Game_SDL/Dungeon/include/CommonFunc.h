@@ -34,6 +34,7 @@ static Mix_Chunk* shot_sound;
 static Mix_Chunk* empty_sound;
 static Mix_Chunk* reload_sound;
 static Mix_Chunk* fall_sound;
+static Mix_Chunk* scream_sound;
 
 
 

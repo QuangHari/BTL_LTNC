@@ -176,7 +176,8 @@ void Boss::turnAround(const int& x_pos,SDL_Renderer* des){
     if(rect.x>x_pos){
         if(direction ==TURNRIGHT){
             direction = TURNLEFT;
-            loadImg("img//bosstest.png",des);
+            loadImg("img//bossleft.png",des);
+            setClip();
 
 
         }
@@ -184,8 +185,8 @@ void Boss::turnAround(const int& x_pos,SDL_Renderer* des){
     }else {
         if(direction ==TURNLEFT){
             direction = TURNRIGHT;
-            loadImg("img//bosstest.png",des);
-
+            loadImg("img//bossright.png",des);
+            setClip();
 
 
         }
