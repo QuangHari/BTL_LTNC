@@ -22,6 +22,7 @@ void Bullet::loadImgBullet(SDL_Renderer* des){
 
     }else if (bullet_type == BULLETBOSS){
         loadImg("img//_bullet.png",des);
+
     }
 }
 void Bullet::handleMove(const int& x_border,const int& y_border){

@@ -173,7 +173,7 @@ again_label:
 
     boss.setYPos(-200);
     boss.setXPos(600);
-    //boss.setXPos(MAX_MAP_X*TILE_SIZE-SCREEN_WIDTH*0.6);
+    boss.setXPos(MAX_MAP_X*TILE_SIZE-SCREEN_WIDTH*0.2);
 
 
     PlayerInfo player_info;
@@ -197,6 +197,7 @@ again_label:
 
 
     int hp =3;
+    int timeReset = 100;
 
 
     TextObj time_game;
@@ -312,23 +313,105 @@ again_label:
             frameDead = 0;
         }
 
-
+        // set boss
         int val = MAX_MAP_X*TILE_SIZE -(map_data.start_x+p_player.getRect().x);
-        //if (val<= SCREEN_WIDTH){
-            //if (isBossAppear == false){
-                boss.setMapXY(map_data.start_x,map_data.start_y);
-                boss.doEnemy(map_data);
-                boss.show(g_screen);
-                isBossAppear = true;
-            //}
+        if (val<= SCREEN_WIDTH){
 
-        //}
+            isBossAppear = true;
+
+        }
+
+        // boss attack
         if (isBossAppear ==true){
+            boss.setMapXY(map_data.start_x,map_data.start_y);
+            boss.doEnemy(map_data);
+            boss.show(g_screen);
 
-            boss.attack(g_screen);
+            boss.attack(p_player.getRect().x,g_screen);
             boss.makeBulelt(g_screen,SCREEN_WIDTH,SCREEN_HEIGHT);
             boss.turnAround(p_player.getRect().x,g_screen);
+            SDL_Rect bossRect;
+            SDL_Rect playerRect;
+            bossRect.x = boss.getXPos();
+            bossRect.y = boss.getYPos();
+            bossRect.w = 120;
+            bossRect.h = 160;
+            playerRect.x = p_player.getXPos();
+            playerRect.y = p_player.getYPos();
+            playerRect.w = 40;
+            playerRect.h = 64;
+
+
+            bool bCol1 =SDLCommonFunc::CheckCollision1(playerRect,bossRect);
+            timeReset -- ;
+                if (bCol1){
+                    if (timeReset <= 0 ){
+
+                        //p_player.reduceHp() ;
+                        if(p_player.getHp()>0){
+                            if (!p_player.getMuteEffect()){
+                                Mix_PlayChannel(-1,explosion_sound,0);
+                            }
+
+                           // player_info.decrease();
+                            //player_info.render(g_screen);
+                            std::cout<<"dead";
+                            x_dead = p_player.getRect().x - frame_explosion_width*0.5;
+                            y_dead = p_player.getRect().y - frame_explosion_height*0.5;
+                            frameDead ++;
+                            p_player.setRect(0,0);
+                            p_player.setComeBack(60);
+                            timeReset = 100;
+                            continue;
+                        }
+                    }
+
+
+                }
+            vector<Bullet*> boss_bullet_list = boss.getBulletList();
+            for (int i =0;i<boss_bullet_list.size();i++){
+                Bullet* pb_bullet =boss_bullet_list.at(i);
+                if (pb_bullet != NULL){
+                    SDL_Rect bulletRect = pb_bullet->getRect();
+                    bulletRect.w = 20;
+                    bulletRect.h = 20;
+                    SDL_Rect rect1 = p_player.getRect();
+                    rect1.w /=8 ;
+
+                    bool bCol12 =SDLCommonFunc::CheckCollision1(bulletRect,rect1);
+                        if (bCol12){
+
+                            //p_player.reduceHp() ;
+                            if(p_player.getHp()>0){
+                                if (!p_player.getMuteEffect()){
+                                    Mix_PlayChannel(-1,explosion_sound,0);
+                                }
+
+                               // player_info.decrease();
+                                //player_info.render(g_screen);
+
+
+                                x_dead = p_player.getRect().x - frame_explosion_width*0.5;
+                                y_dead = p_player.getRect().y - frame_explosion_height*0.5;
+                                frameDead ++;
+                                p_player.setRect(0,0);
+                                p_player.setComeBack(60);
+                                //timeReset = 100;
+                                continue;
+                            }
+
+
+
+                        }
+
+                }
+
+            }
+
+
+
         }
+
         /*boss.setMapXY(map_data.start_x,map_data.start_y);
         boss.doEnemy(map_data);
         boss.show(g_screen);*/
@@ -450,7 +533,7 @@ again_label:
         int real_time =fps_timer.getTick();
         int time_one_frame = 1000/FRAME_PER_SECOND;
         int real_fps =1000/real_time;
-        cout << real_fps<<endl;
+        //cout << real_fps<<endl;
         if (real_time <time_one_frame){
             int delay = time_one_frame - real_time;
             if (delay >0){

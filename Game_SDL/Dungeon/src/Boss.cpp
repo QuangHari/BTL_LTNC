@@ -7,6 +7,8 @@ Boss::Boss()
     skillCD =BOSSCD;
     skillCur = 1;
     numberBullet =NUMBERBULLETMAX;
+    step = STEPATTACK;
+    onWalk = false;
 }
 
 Boss::~Boss()
@@ -50,6 +52,10 @@ void Boss::show(SDL_Renderer* des){
 }
 
 void Boss::initBullet(Bullet* p_bullet,SDL_Renderer* screen){
+
+    rect.x = x_pos - map_x;
+    rect.y = y_pos - map_y;
+
     if(bullet_list.size()!= 0){
         dir_bullet = bullet_list.at(0)->getDir();
 
@@ -60,7 +66,7 @@ void Boss::initBullet(Bullet* p_bullet,SDL_Renderer* screen){
         p_bullet->setBulletType(Bullet::BULLETBOSS);
         p_bullet->loadImgBullet(screen);
         p_bullet->setMove(true);
-        p_bullet->setRect(rect.x ,rect.y+40);
+        p_bullet->setRect(this->rect.x +20,this->rect.y+height_frame*0.4);
 
         p_bullet->setDir(dir_bullet);
         bullet_list.push_back(p_bullet);
@@ -106,19 +112,40 @@ void Boss::useSKill1(SDL_Renderer* des){
 }
 
 
-void Boss::useSkill2(){
+void Boss::useSkill2(const int& x_player){
     numberBullet =NUMBERBULLETMAX;
+    if (onWalk ==false ){
+        x_player_cur = x_player;
+        x_current = rect.x;
+        onWalk = true;
+    }
 
-    skillCD = BOSSCD;
+    if (step > 0){
+
+        if(x_current >x_player_cur){
+            x_pos -= (500/STEPATTACK);
+
+        }else if (x_current <x_player_cur){
+            x_pos += (500/STEPATTACK);
+        }
+
+        step --;
+    }else if (step <=0){
+
+        skillCur =3;
+        skillCD = BOSSCD;
+    }
 
 }
 
 void Boss::useSkill3(){
+    step = STEPATTACK;
+    onWalk = false;
 
     skillCD = BOSSCD;
 }
 
-void Boss::attack(SDL_Renderer* des){
+void Boss::attack(const int& x_player,SDL_Renderer* des){
 
     if (skillCD <= 0){
         switch (skillCur){
@@ -127,8 +154,8 @@ void Boss::attack(SDL_Renderer* des){
 
             break;
         case SKILL2:
-            useSkill2();
-            skillCur =3;
+            useSkill2(x_player);
+
             break;
         case SKILL3:
             useSkill3();
@@ -150,7 +177,7 @@ void Boss::turnAround(const int& x_pos,SDL_Renderer* des){
         if(direction ==TURNRIGHT){
             direction = TURNLEFT;
             loadImg("img//bosstest.png",des);
-            std::cout<<"Left";
+
 
         }
 
@@ -158,7 +185,7 @@ void Boss::turnAround(const int& x_pos,SDL_Renderer* des){
         if(direction ==TURNLEFT){
             direction = TURNRIGHT;
             loadImg("img//bosstest.png",des);
-            std::cout<<"Right";
+
 
 
         }

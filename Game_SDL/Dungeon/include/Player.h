@@ -37,6 +37,7 @@ class Player :public Object
         SDL_Rect getRectFrame();
 
         float getXPos(){return x_pos;}
+        float getYPos(){return y_pos;}
         void setBullet(std::vector<Bullet*> list){p_bullet_list = list;}
         std::vector<Bullet*> getBullets(){return p_bullet_list;}
         void handleBullet(SDL_Renderer* des);
@@ -79,6 +80,7 @@ class Player :public Object
         Mix_Chunk* fall;
 
         int come_back_time =0;
+        bool meetBoss;
 };
 
 #endif // PLAYER_H

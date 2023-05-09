@@ -7,8 +7,10 @@
 #include "Bullet.h"
 
 #define ENEMY_GRAVITY 0.1
-#define BOSSCD 70
+#define BOSSCD 100
 #define NUMBERBULLETMAX 30
+#define STEPATTACK 20
+
 class Boss : public Enemy
 {
     public:
@@ -35,9 +37,9 @@ class Boss : public Enemy
 
        std::vector<Bullet*> getBulletList(){return bullet_list;};
        void setBulletList(const std::vector<Bullet*> bullets){bullet_list = bullets;};
-       void attack(SDL_Renderer* des);
+       void attack(const int& x_player,SDL_Renderer* des);
        void useSKill1(SDL_Renderer* des);
-       void useSkill2();
+       void useSkill2(const int& x_player);
        void useSkill3();
        void turnAround(const int& x_player,SDL_Renderer* des);
 
@@ -49,7 +51,10 @@ class Boss : public Enemy
         int skillCD;
         int dir_bullet;
         int  numberBullet;
-        bool usingSkill2;
+        int step;
+        float x_current;
+        float x_player_cur;
+        bool onWalk;
         bool usingSkill3;
 
 

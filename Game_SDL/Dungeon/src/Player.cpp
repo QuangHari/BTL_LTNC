@@ -2,7 +2,7 @@
 
 #define GRAVITY 1
 #define MAX_FALL_SPEED 8
-#define PLAYER_SPEED 15
+#define PLAYER_SPEED 35
 #define PLAYER_JUMP_VAL 20
 #define HEIGHT_BULLET 0.45
 #define HETGHT_BULLET_RUN 0.5
@@ -31,6 +31,7 @@ Player::Player()
     map_y = 0;
     number_bullet = 10;
     number_bullet_left = 40;
+    meetBoss = false;
 
 }
 
@@ -286,10 +287,14 @@ void Player::Doplayer(Map& map_data){
             y_pos =0;
             x_val =0;
             y_val=0;
-            if (x_pos >256){
-                x_pos -=256;
+            if (meetBoss == false){
+                if (x_pos >256){
+                    x_pos -=256;
+                }else {
+                    x_pos =0;
+                }
             }else {
-                x_pos =0;
+                x_pos = map_data.start_x +100;
             }
 
         }
@@ -352,11 +357,25 @@ void Player::checkMap(Map& map_data){
         }
     }
 
-
+    if (meetBoss == true){
+        if (x_pos<map_data.start_x+100 ){
+            if (x_val <0){
+                x_val = 0;
+            }
+        }
+    }
     x_pos +=x_val;
     y_pos += y_val;
+
     if (x_pos <0){
-        x_pos =0;
+        if (meetBoss == true){
+
+                x_pos = 200;
+
+
+        }else {
+            x_pos =0;
+        }
     }else if (x_pos +width_frame >map_data.max_x){
         x_pos = map_data.max_x -width_frame -1;
     }
@@ -370,13 +389,18 @@ void Player::checkMap(Map& map_data){
 }
 
 void Player::centerPlayerOnMap(Map& map_data){
-    map_data.start_x = x_pos -(SCREEN_WIDTH/2);
-    if (map_data.start_x <0){
-        map_data.start_x = 0;
-    }else if (map_data.start_x +SCREEN_WIDTH >=map_data.max_x){
-        map_data.start_x = map_data.max_x - SCREEN_WIDTH;
+    if (meetBoss == false){
+        map_data.start_x = x_pos -(SCREEN_WIDTH/2);
+        if (map_data.start_x <0){
+            map_data.start_x = 0;
+        }else if (map_data.start_x +SCREEN_WIDTH >=map_data.max_x){
+            map_data.start_x = map_data.max_x - SCREEN_WIDTH;
+            meetBoss = true;
 
+        }
     }
+
+
     map_data.start_y = y_pos - (SCREEN_HEIGHT/2);
     if (map_data.start_y <0){
         map_data.start_y = 0;
