@@ -74,13 +74,14 @@ int SDLCommonFunc::ShowMenu(SDL_Renderer* des, TTF_Font* font){
 
     return 0;
 }
-int SDLCommonFunc::showDeadMenu(SDL_Renderer* des, TTF_Font* font){
+int SDLCommonFunc::showEndMenu(SDL_Renderer* des, TTF_Font* font,std::string path,std::string text){
     int time =0;
     Mix_PauseMusic();
     SDL_Event event;
     Object background;
 
-    bool ret = background.loadImg("img//menugamedead.png",des);
+    //bool ret = background.loadImg("img//menugamedead.png",des);
+    bool ret = background.loadImg(path,des);
     if (ret == false){
         return 1 ;
     }
@@ -140,6 +141,14 @@ void SDLCommonFunc::renderBlinkingText(SDL_Renderer* renderer, TTF_Font* font, c
 
     SDL_FreeSurface(textSurface);
     SDL_DestroyTexture(texture);
+}
+
+void SDLCommonFunc::showBossScene(SDL_Renderer* des){
+    SDL_Surface* img = IMG_Load("img//bossscene.png");
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(des, img);
+    SDL_RenderCopy(des, texture, NULL, NULL);
+    //SDL_Delay(3000);
+
 }
 
 

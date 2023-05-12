@@ -165,6 +165,8 @@ again_label:
     int x_dead;
     int y_dead;
 
+    bool isLoadScene = false;
+
 
     Player p_player;
     p_player.loadImg("img//soldier_right.png",g_screen);
@@ -203,7 +205,7 @@ again_label:
     int hp =3;
     int timeReset = 100;
     bool isLoadScream = false;
-
+    int timeScene = 70;
 
     TextObj time_game;
     time_game.setColor(TextObj::WHITE);
@@ -319,8 +321,8 @@ again_label:
         }
 
         // set boss
-        int val = MAX_MAP_X*TILE_SIZE -(map_data.start_x+p_player.getRect().x);
-        if (val<= SCREEN_WIDTH){
+        int val = MAX_MAP_X*TILE_SIZE -(map_data.start_x+p_player.getRect().x) ;
+        if (val<= SCREEN_WIDTH/2){
 
             isBossAppear = true;
 
@@ -335,65 +337,33 @@ again_label:
                 isLoadScream = true;
 
             }
-
-            boss.setMapXY(map_data.start_x,map_data.start_y);
-            boss.doEnemy(map_data);
+            if (isLoadScene == true){
 
 
-            boss.attack(p_player.getRect().x,g_screen);
-            boss.makeBulelt(g_screen,SCREEN_WIDTH,SCREEN_HEIGHT);
-            boss.turnAround(p_player.getRect().x,g_screen);
-            boss.show(g_screen);
-            SDL_Rect bossRect;
-            SDL_Rect playerRect;
-            bossRect.x = boss.getXPos();
-            bossRect.y = boss.getYPos();
-            bossRect.w = 120;
-            bossRect.h = 160;
-            playerRect.x = p_player.getXPos();
-            playerRect.y = p_player.getYPos();
-            playerRect.w = 40;
-            playerRect.h = 64;
+                boss.setMapXY(map_data.start_x,map_data.start_y);
+                boss.doEnemy(map_data);
 
 
-            bool bCol1 =SDLCommonFunc::CheckCollision1(playerRect,bossRect);
-            timeReset -- ;
-                if (bCol1){
-                    if (timeReset <= 0 ){
-
-                        //p_player.reduceHp() ;
-                        if(p_player.getHp()>0){
-                            if (!p_player.getMuteEffect()){
-                                Mix_PlayChannel(-1,explosion_sound,0);
-                            }
-
-                           // player_info.decrease();
-                            //player_info.render(g_screen);
-
-                            x_dead = p_player.getRect().x - frame_explosion_width*0.5;
-                            y_dead = p_player.getRect().y - frame_explosion_height*0.5;
-                            frameDead ++;
-                            p_player.setRect(SCREEN_HEIGHT/2,0);
-                            p_player.setComeBack(60);
-                            timeReset = 100;
-                            continue;
-                        }
-                    }
+                boss.attack(p_player.getRect().x,g_screen);
+                boss.makeBulelt(g_screen,SCREEN_WIDTH,SCREEN_HEIGHT);
+                boss.turnAround(p_player.getRect().x,g_screen);
+                boss.show(g_screen);
+                SDL_Rect bossRect;
+                SDL_Rect playerRect;
+                bossRect.x = boss.getXPos()+40;
+                bossRect.y = boss.getYPos()+40;
+                bossRect.w = 80;
+                bossRect.h = 80;
+                playerRect.x = p_player.getXPos();
+                playerRect.y = p_player.getYPos();
+                playerRect.w = 40;
+                playerRect.h = 64;
 
 
-                }
-            vector<Bullet*> boss_bullet_list = boss.getBulletList();
-            for (int i =0;i<boss_bullet_list.size();i++){
-                Bullet* pb_bullet =boss_bullet_list.at(i);
-                if (pb_bullet != NULL){
-                    SDL_Rect bulletRect = pb_bullet->getRect();
-                    bulletRect.w = 20;
-                    bulletRect.h = 20;
-                    SDL_Rect rect1 = p_player.getRect();
-                    rect1.w /=8 ;
-
-                    bool bCol12 =SDLCommonFunc::CheckCollision1(bulletRect,rect1);
-                        if (bCol12){
+                bool bCol1 =SDLCommonFunc::CheckCollision1(playerRect,bossRect);
+                timeReset -- ;
+                    if (bCol1){
+                        if (timeReset <= 0 ){
 
                             //p_player.reduceHp() ;
                             if(p_player.getHp()>0){
@@ -404,20 +374,55 @@ again_label:
                                // player_info.decrease();
                                 //player_info.render(g_screen);
 
-
                                 x_dead = p_player.getRect().x - frame_explosion_width*0.5;
                                 y_dead = p_player.getRect().y - frame_explosion_height*0.5;
                                 frameDead ++;
-                                p_player.setRect(SCREEN_WIDTH/2,0);
+                                p_player.setRect(SCREEN_HEIGHT/2,0);
                                 p_player.setComeBack(60);
-                                //timeReset = 100;
+                                timeReset = 100;
                                 continue;
                             }
-
-
-
                         }
 
+
+                    }
+                vector<Bullet*> boss_bullet_list = boss.getBulletList();
+                for (int i =0;i<boss_bullet_list.size();i++){
+                    Bullet* pb_bullet =boss_bullet_list.at(i);
+                    if (pb_bullet != NULL){
+                        SDL_Rect bulletRect = pb_bullet->getRect();
+                        bulletRect.w = 20;
+                        bulletRect.h = 20;
+                        SDL_Rect rect1 = p_player.getRect();
+                        rect1.w /=8 ;
+
+                        bool bCol12 =SDLCommonFunc::CheckCollision1(bulletRect,rect1);
+                            if (bCol12){
+
+                                //p_player.reduceHp() ;
+                                if(p_player.getHp()>0){
+                                    if (!p_player.getMuteEffect()){
+                                        Mix_PlayChannel(-1,explosion_sound,0);
+                                    }
+
+                                   // player_info.decrease();
+                                    //player_info.render(g_screen);
+
+
+                                    x_dead = p_player.getRect().x - frame_explosion_width*0.5;
+                                    y_dead = p_player.getRect().y - frame_explosion_height*0.5;
+                                    frameDead ++;
+                                    p_player.setRect(SCREEN_WIDTH/2,0);
+                                    p_player.setComeBack(60);
+                                    //timeReset = 100;
+                                    continue;
+                                }
+
+
+
+                            }
+
+                    }
                 }
 
             }
@@ -467,20 +472,25 @@ again_label:
                     }
                 }
 
+
                 SDL_Rect bossRect;
-                bossRect.x = boss.getRect().x +60;
-                bossRect.y = boss.getRect().y;
-                bossRect.w = boss.getWidthFrame()-90;
-                bossRect.h = boss.getHeightFrame();
+                bossRect.x = boss.getRect().x +40;
+                bossRect.y = boss.getRect().y+40;
+                bossRect.w = 80;
+                bossRect.h = 80;
                 bool bCol =SDLCommonFunc::CheckCollision1(bRect,bossRect);
                 if (bCol){
-                    int deadmenu = SDLCommonFunc::showDeadMenu(g_screen,font);
-                    if (deadmenu == 1){
-                        quit = true;
-                        continue;
-                    }else if (deadmenu ==2){
-                        quit = false;
-                        goto again_label;
+                    boss.reduceHp();
+                    p_player.removeBullet(i);
+                    if (boss.getHp() <=0){
+                        int deadmenu = SDLCommonFunc::showEndMenu(g_screen,font,"img//win.png"," ");
+                        if (deadmenu == 1){
+                            quit = true;
+                            continue;
+                        }else if (deadmenu ==2){
+                            quit = false;
+                            goto again_label;
+                        }
                     }
                 }
 
@@ -528,13 +538,27 @@ again_label:
         score_text.loadFromRenderText(font,g_screen);
         score_text.renderText(g_screen,SCREEN_WIDTH*0.4-50,15);
 
+        if (isBossAppear == true){
+            if (isLoadScene == false){
+                if (timeScene >0){
 
+                    SDLCommonFunc::showBossScene(g_screen);
+
+                    timeScene--;
+                }else {
+                    isLoadScene = true;
+                }
+
+            }
+
+        }
         SDL_RenderPresent(g_screen);
 
 
         if (isdead == true){
 
-            int deadmenu = SDLCommonFunc::showDeadMenu(g_screen,font);
+            int deadmenu = SDLCommonFunc::showEndMenu(g_screen,font,"img//menugamedead.png","");
+
             if (deadmenu == 1){
                 quit = true;
                 continue;
@@ -547,7 +571,7 @@ again_label:
         int real_time =fps_timer.getTick();
         int time_one_frame = 1000/FRAME_PER_SECOND;
         int real_fps =1000/real_time;
-        cout << real_fps<<endl;
+        //cout << real_fps<<endl;
         if (real_time <time_one_frame){
             int delay = time_one_frame - real_time;
             if (delay >0){

@@ -21,7 +21,7 @@ void Bullet::loadImgBullet(SDL_Renderer* des){
 
 
     }else if (bullet_type == BULLETBOSS){
-        loadImg("img//_bullet.png",des);
+        loadImg("img//R.png",des);
 
     }
 }

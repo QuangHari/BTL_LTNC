@@ -65,7 +65,8 @@ namespace SDLCommonFunc{
     bool CheckCollision1 (const SDL_Rect& obj1,const SDL_Rect& obj2);
     int ShowMenu(SDL_Renderer* des, TTF_Font* font);
     void renderBlinkingText(SDL_Renderer* renderer, TTF_Font* font, const char* text, int x, int y, Uint32 blinkInterval);
-    int showDeadMenu(SDL_Renderer* des, TTF_Font* font);
+    int showEndMenu(SDL_Renderer* des, TTF_Font* font,std::string path,std::string text);
+    void showBossScene(SDL_Renderer* des);
 }
 
 

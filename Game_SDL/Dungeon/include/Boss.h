@@ -10,6 +10,8 @@
 #define BOSSCD 100
 #define NUMBERBULLETMAX 30
 #define STEPATTACK 20
+#define ANIMATION 16
+#define HPBOSS 20
 
 class Boss : public Enemy
 {
@@ -31,6 +33,7 @@ class Boss : public Enemy
 
         bool loadImg(std::string path,SDL_Renderer* screen);
         void setClip();
+        void setAnimation();
         void show(SDL_Renderer* des);
         void initBullet(Bullet* p_bullet,SDL_Renderer* screen);
         void makeBulelt(SDL_Renderer* screen,const int& x_limit,const int& y_limit);
@@ -42,6 +45,8 @@ class Boss : public Enemy
        void useSkill2(const int& x_player);
        void useSkill3();
        void turnAround(const int& x_player,SDL_Renderer* des);
+       int getHp(){return hp;};
+       void reduceHp(){hp--;};
 
 
     private:
@@ -56,7 +61,9 @@ class Boss : public Enemy
         float x_player_cur;
         bool onWalk;
         bool usingSkill3;
-
+        int timeAnimation;
+        SDL_Rect* currentClip ;
+        int hp;
 
 
 

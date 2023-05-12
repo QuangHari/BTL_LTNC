@@ -9,6 +9,8 @@ Boss::Boss()
     numberBullet =NUMBERBULLETMAX;
     step = STEPATTACK;
     onWalk = false;
+    timeAnimation = ANIMATION-1;
+    hp = HPBOSS;
 }
 
 Boss::~Boss()
@@ -23,7 +25,14 @@ bool Boss::loadImg(std::string path,SDL_Renderer* screen){
     }
     return ret;
 }
-
+void Boss::setAnimation(){
+    if (timeAnimation)
+    currentClip =&frame_clip[timeAnimation/2];
+    timeAnimation --;
+    if (timeAnimation<=0){
+        timeAnimation = ANIMATION-1;
+    }
+}
 void Boss::setClip(){
     if (width_frame >0 && height_frame >0){
         for (int i =0;i<8;i++){
@@ -44,10 +53,12 @@ void Boss::show(SDL_Renderer* des){
         if (frame >= 4){
             frame =0;
         }
-
-        SDL_Rect* currentClip =&frame_clip[frame];
+        //setAnimation();
+        currentClip =&frame_clip[frame];
         SDL_Rect renderQuad = {rect.x,rect.y,width_frame,rect.h};
         SDL_RenderCopy(des,p_object,currentClip,&renderQuad);
+
+
     }
 }
 
@@ -66,7 +77,12 @@ void Boss::initBullet(Bullet* p_bullet,SDL_Renderer* screen){
         p_bullet->setBulletType(Bullet::BULLETBOSS);
         p_bullet->loadImgBullet(screen);
         p_bullet->setMove(true);
+        p_bullet->setDir(direction);
+        if (p_bullet->getDir() == 1){
         p_bullet->setRect(this->rect.x +20,this->rect.y+height_frame*0.4);
+        }else {
+            p_bullet->setRect(this->rect.x +width_frame-20,this->rect.y+height_frame*0.4);
+        }
 
         p_bullet->setDir(dir_bullet);
         bullet_list.push_back(p_bullet);
@@ -82,11 +98,11 @@ void Boss::makeBulelt(SDL_Renderer* screen,const int& x_limit,const int&y_limit)
 
             if (p_bullet->getMove()){
                 int bullet_distance = rect.x -p_bullet->getRect().x;
-                if (bullet_distance < 1000&& bullet_distance >-1000){
+                //if (bullet_distance < 1000&& bullet_distance >-1000){
 
                     p_bullet->handleMove(x_limit,y_limit);
                     p_bullet->render(screen);
-                }
+                //}
 
             }else {
                 bullet_list.erase(bullet_list.begin()+ i);

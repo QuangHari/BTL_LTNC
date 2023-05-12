@@ -44,6 +44,7 @@ void Enemy::setClip(){
     }
 }
 
+
 void Enemy::show(SDL_Renderer* des){
     if (come_back_time == 0){
         rect.x = x_pos - map_x;
